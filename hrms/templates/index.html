@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %} 
+        <div class="box">
+
+            <div class="box todos">
+
+                <h2 class="box">列表</h2>
+                <a href="{% url ot_new %}">新增</a>
+                <ul>
+                    {% for app in applications %}
+                        <li>
+                            {{app.subject}}
+                            <a href="{% url ot_edit app.id %}">修改</a>,
+                            <a href="{% url ot_delete app.id %}" onclick="return confirm('删除以后不能恢复的，确定？')">删除</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+{% endblock %}

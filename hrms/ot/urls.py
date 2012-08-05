@@ -7,5 +7,6 @@ urlpatterns = patterns('',
     url(r'^ot/(?P<id>\d+)/edit/$', 'ot.views.edit', name='ot_edit'),
     url(r'^ot/(?P<id>\d+)/delete/$', 'ot.views.delete', name='ot_delete'),
     url(r'^ot/addEmployee/$', 'ot.employee.add', name='ot_employee_add'),
+    url(r'^ot/addOvertimeform/$', 'ot.overtimeform.add', name='ot_overtimeform_add'),
 
 )

@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from hrms.ot.models import Employee
+from hrms.ot.models import Employee, Overtimeform
 
 from models import Application, Person
 
@@ -22,6 +22,7 @@ def index(request):
     ctx = {}
     ctx['applications'] = Application.objects.all()
     ctx['employees'] = Employee.objects.all()
+    ctx['overtimeforms'] = Overtimeform.objects.all()
     return render(request, 'index.html', ctx)
 
 def new(request):

@@ -1,4 +1,5 @@
 #coding=utf-8
+from django.contrib.auth.models import User
 
 from django.db import models
 
@@ -22,6 +23,7 @@ class Person(models.Model):
 
 #    员工表
 class Employee(models.Model):
+    user = models.OneToOneField(User)
 #    员工姓名
     name = models.CharField(max_length=20)
 #    员工邮箱地址

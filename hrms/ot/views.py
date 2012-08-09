@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 from django import forms
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
@@ -23,6 +24,7 @@ def index(request):
     ctx['applications'] = Application.objects.all()
     ctx['employees'] = Employee.objects.all()
     ctx['overtimeforms'] = Overtimeform.objects.all()
+    ctx['model'] = User.objects.get(id=request.session["_auth_user_id"]).get_profile();
     return render(request, 'index.html', ctx)
 
 def new(request):

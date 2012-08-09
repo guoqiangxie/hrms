@@ -5,7 +5,7 @@
 
         <div class="box todos">
             <h2 class="box">列表</h2>
-            <a href="{% url ot_new %}">新增</a>
+            <a href="{% url ot_new %}">新增{{ model.telephone }}</a>
             <ul>
                 {% for app in applications %}
                     <li>

@@ -1,0 +1,3 @@
+  curl -H "Accept:application/json" http://localhost:8000/apply/apply/?format=json
+  curl --dump-header - -H "Content-Type:application/json" -X POST --data '{"approval_data":"aaaa", "apply_date":"2012-08-09T00:33:22"}' http://localhost:8000/apply/apply/
+  curl -H "Accept:application/json" http://localhost:8000/apply/apply/?format=json

@@ -50,3 +50,7 @@ def delete(request, id):
     del_app = get_object_or_404(Application, id=id)
     del_app.delete()
     return HttpResponseRedirect(reverse('ot_idx'))
+
+def show(request, id):
+    del_app = get_object_or_404(Application, id=id)
+    return HttpResponseRedirect(reverse('ot_idx'))

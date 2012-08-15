@@ -16,28 +16,6 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="box todos">
-            <h2 class="box">员工</h2>
-            <a href="{% url ot_employee_add%}">新增</a>
-            <ul>
-                {% for employee in employees %}
-                    <li>
-                        {{ employee.name }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="box todos">
-            <h2 class="box">加班申请单</h2>
-            <a href="{% url ot_overtimeform_add%}">新增</a>
-            <ul>
-                {% for overtimeform in overtimeforms %}
-                    <li>
-                        {{ overtimeform.applyer }} {{ overtimeform.reason }} {{ overtimeform.status }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
 
     </div>
 {% endblock %}

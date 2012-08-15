@@ -6,9 +6,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
-from apply.api import ApplyResource
 
-applyResource = ApplyResource()
 admin.autodiscover()
 
 urlpatterns = patterns(  # Examples:
@@ -20,7 +18,6 @@ urlpatterns = patterns(  # Examples:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^ot/', include('ot.urls')),
-    url(r'^apply/', include(applyResource.urls)),
     url(r'^accounts/login/$', login, {'template_name': 'ot/login.html'
         }),
     url(r'^accounts/logout/$', logout),

@@ -26,7 +26,8 @@ def new(request):
     if request.method == 'POST':
         overtimeForm = OvertimeForm(request.POST)
         if overtimeForm.is_valid():
-            overtimeForm.save()
+            overtimeForm = overtimeForm.save()
+            id = overtimeForm.id
             return HttpResponseRedirect(reverse('ot_idx'))
     return render(request, 'overtimeForm.html', ctx)
 

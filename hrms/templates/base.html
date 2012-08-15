@@ -4,26 +4,43 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Jinjiang Overtime Management System</title>
-    <link href="{{ STATIC_URL }}styles/reset.css" rel="stylesheet" type="text/css"/>
-    <link href="{{ STATIC_URL }}styles/style.css" rel="stylesheet" type="text/css"/>
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}styles/blueprint/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="{{ STATIC_URL }}styles/blueprint/print.css" type="text/css" media="print">
+    <!--[if lt IE 8]><link rel="stylesheet" href="{{ STATIC_URL }}styles/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+
+    <!-- Import fancy-type plugin for the sample page. -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}styles/blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+
+
 </head>
 
 <body>
-<div class="page">
-    <div class="header box">
-        <h1><a href="/">home</a></h1>
+<div class="container">
+    <h1>A simple sample page</h1>
+    <hr>
+    <h2 class="alt">This sample page demonstrates a tiny fraction of what you get with Blueprint.</h2>
+    <hr>
+    <div class="span-3 colborder">
+        <h6>目录</h6>
+        <ul>
+            <li>申请加班</li>
+            <li>待审批</li>
+            <li>加班查询</li>
+            <li>加班统计</li>
+            <li>加班审批</li>
+            <li>加班确认</li>
+        </ul>
+
     </div>
-
-    <div class="main box">
-
+    <div class="span-20 last">
+        <h6>This box is aligned with the sidebar</h6>
         {% block content %}
         {% endblock %}
-
-        <div class="foot">
-            <a href="http://djangoproject.com/">Django</a><br/>
-            <a href="accounts/logout/">Logout</a>
-        </div>
-
     </div>
+</div>
 </body>
+
 </html>
+
+

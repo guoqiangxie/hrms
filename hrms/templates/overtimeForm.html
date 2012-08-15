@@ -5,7 +5,12 @@
             <h2>新增</h2>
             <form action="" method="post">
                 {% csrf_token %}
-                {{form.as_p}}
+                开始时间：{{form.begintime}}<br/>
+                结束时间：{{form.endtime}}<br/>
+                加班原因：{{form.reason}}<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注：{{form.remark}}
+                <input name="status" value="NEW" style="display: none;"/>
+                <input name="applyer" value="{{model.id}}" style="display: none;"/>
                 <p>
                     <input type="submit" class="submit" value="提交" />
                 </p>

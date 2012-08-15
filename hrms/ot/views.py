@@ -6,35 +6,29 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from hrms.ot.models import Employee, Overtimeform
+from hrms.ot.models import  Overtimeform
 
-from models import Application, Person
+from models import Application
 
-class ApplicationForm(forms.ModelForm):
+class OvertimeForm(forms.ModelForm):
     class Meta:
-        model = Application
-
-class PersonForm(forms.ModelForm):
-    class Meta:
-        model = Person
+        model = Overtimeform
 
 @login_required
 def index(request):
-    ctx = {}
-    ctx['applications'] = Application.objects.all()
-    ctx['employees'] = Employee.objects.all()
-    ctx['overtimeforms'] = Overtimeform.objects.all()
-    ctx['model'] = User.objects.get(id=request.session["_auth_user_id"]).get_profile();
-    return render(request, 'index.html', ctx)
+    return render(request, 'index.html')
 
 def new(request):
-    appForm = ApplicationForm()
+    ctx = {}
+    overtimeForm = OvertimeForm()
+    ctx['model'] = User.objects.get(id=request.session["_auth_user_id"]).get_profile()
+    ctx['form'] = overtimeForm
     if request.method == 'POST':
-        appForm = ApplicationForm(request.POST)
-        if appForm.is_valid():
-            appForm.save()
+        overtimeForm = OvertimeForm(request.POST)
+        if overtimeForm.is_valid():
+            overtimeForm.save()
             return HttpResponseRedirect(reverse('ot_idx'))
-    return render(request, 'form.html', {'form': appForm})
+    return render(request, 'overtimeForm.html', ctx)
 
 def edit(request, id):
     edit_app = get_object_or_404(Application, id=id)

@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
-from django import forms
-from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
-from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from hrms.ot.models import Overtimeform
 
 def apply(request, id):
-    ctx = {}
     return render(request, 'index.html', ctx)
+
+def applyFormList(request):
+    ctx = {}
+    ctx['applyFormList'] = Overtimeform.objects.filter(status='NEW')
+    return render(request, 'applyFormList.html', ctx)
 
 def confirm(request, id):
     ctx = {}

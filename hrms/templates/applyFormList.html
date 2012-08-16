@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %} 
+        <div class="box post">
+            <ul>
+                {% for overtimeform in applyFormList %}
+                    <li>
+                        {{ overtimeform.begintime }}
+                        {{ overtimeform.endtime }}
+                        {{ overtimeform.reason }}
+                        {{ overtimeform.applyer }}
+                        {{ overtimeform.status }}
+{#                        <a href="{% url ot_edit overtimeform.id %}">修改</a>,#}
+{#                        <a href="{% url ot_delete overtimeform.id %}" onclick="return confirm('删除以后不能恢复的，确定？')">删除</a>#}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+{% endblock %}

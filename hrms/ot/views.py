@@ -22,6 +22,7 @@ class Employee_overtimeform_refForm(forms.ModelForm):
 def index(request):
     return render(request, 'index.html')
 
+@login_required
 def new(request):
     ctx = {}
     overtimeForm = OvertimeForm()
@@ -40,6 +41,7 @@ def new(request):
             return HttpResponseRedirect(reverse('ot_idx'))
     return render(request, 'overtimeForm.html', ctx)
 
+@login_required
 def edit(request, id):
     edit_app = get_object_or_404(Application, id=id)
     appForm = ApplicationForm(instance=edit_app)
@@ -50,11 +52,13 @@ def edit(request, id):
             return HttpResponseRedirect(reverse('ot_idx'))
     return render(request, 'form.html', {'form':appForm})
 
+@login_required
 def delete(request, id):
     del_app = get_object_or_404(Application, id=id)
     del_app.delete()
     return HttpResponseRedirect(reverse('ot_idx'))
 
+@login_required
 def show(request, id):
     del_app = get_object_or_404(Application, id=id)
     return HttpResponseRedirect(reverse('ot_idx'))

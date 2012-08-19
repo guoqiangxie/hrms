@@ -68,7 +68,7 @@ class Employee_overtimeform_ref(models.Model):
 #    审批流程
 class apply_track(models.Model):
 #    加班申请单
-    overtimeform = models.ForeignKey(Employee_overtimeform_ref)
+    overtimeform = models.ForeignKey(Overtimeform)
 #    审批人
     approval = models.ForeignKey(Employee)
 #    审批意见

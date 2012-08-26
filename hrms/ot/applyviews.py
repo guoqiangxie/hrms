@@ -5,7 +5,6 @@ from django import forms
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from hrms.ot.models import Overtimeform, Employee_overtimeform_ref, apply_track
-from hrms.ot.views import OvertimeForm
 
 class apply_trackform(forms.ModelForm):
     class Meta:
@@ -20,9 +19,8 @@ def apply(request, id):
     if request.method == 'POST':
         appForm = apply_trackform(request.POST)
         appForm.save()
-        overtimeForm = OvertimeForm(instance=edit_app)
-        overtimeForm.status = 'APPLY'
-        overtimeForm.save()
+        edit_app.status = 'APPLY'
+        edit_app.save()
         return render(request, 'index.html')
     ctx['applyform'] = appForm
     ctx['model'] = User.objects.get(id=request.session["_auth_user_id"]).get_profile()

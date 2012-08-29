@@ -16,12 +16,7 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注：{{overtimeform.remark}}<br/>
             <form action="" method="post">
                 {% csrf_token %}
-                是否批准：<input type="checkbox" value="APPLY" NAME="status"></br>
-                审批备注：<input type="text" name="approval_note"></br>
-                审批时间：<input type="text" name="apply_date">
-                <input name="approval" value="{{model.id}}" style="display: none;"/>
-                <input name="overtimeform" value="{{overtimeform.id}}" style="display: none;"/>
-                <input name="type" value="HR" style="display: none;"/>
+                {{ applyform.as_p }}
                 <p>
                     <input type="submit" class="submit" value="提交" />
                 </p>

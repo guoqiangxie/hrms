@@ -1,29 +1,33 @@
 #!/usr/bin/env python
 # coding: utf-8
+import datetime
 from django.contrib.auth.decorators import login_required
 from django import forms
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from hrms.ot.models import Overtimeform, Employee_overtimeform_ref, apply_track
 
-class apply_trackform(forms.ModelForm):
-    class Meta:
-        model = apply_track
+class apply_trackform(forms.Form):
+    status = forms.CharField(label='同意审批', widget=forms.CheckboxInput)
+    approval_note = forms.CharField(max_length=255, label='审批意见', widget=forms.Textarea)
 
 @login_required
 def apply(request, id):
     edit_app = get_object_or_404(Overtimeform, id=id)
     ctx = {}
     ctx['overtimeform'] = edit_app
-    appForm = apply_trackform()
+    ctx['applyform'] = apply_trackform()
+    user = User.objects.get(id=request.session["_auth_user_id"]).get_profile()
+    ctx['model'] = user
     if request.method == 'POST':
         appForm = apply_trackform(request.POST)
-        appForm.save()
-        edit_app.status = 'APPLY'
-        edit_app.save()
-        return render(request, 'index.html')
-    ctx['applyform'] = appForm
-    ctx['model'] = User.objects.get(id=request.session["_auth_user_id"]).get_profile()
+        status = appForm.cleaned_data['status']
+        if status == 'on':
+            approval_note = appForm.cleaned_data['approval_note']
+            apply_track(type='DEPART', approval_note=approval_note, approval=user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
+            edit_app.status = 'APPLY'
+            edit_app.save()
+            return render(request, 'index.html')
     refs = Employee_overtimeform_ref.objects.filter(overtimeform=edit_app)
     employees = []
     for ref in refs:

@@ -17,7 +17,7 @@ def apply(request, id):
     ctx = {}
     ctx['overtimeform'] = edit_app
     ctx['applyform'] = apply_trackform()
-    user = User.objects.get(id=request.session["_auth_user_id"]).get_profile()
+    user = request.user
     ctx['model'] = user
     if request.method == 'POST':
         appForm = apply_trackform(request.POST)

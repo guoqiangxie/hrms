@@ -6,9 +6,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from hrms.ot.models import  Overtimeform, Employee, Employee_overtimeform_ref
+from hrms.ot.models import  Overtimeform, Employee_overtimeform_ref
 
-from models import Application
 
 class OvertimeForm(forms.ModelForm):
     class Meta:
@@ -26,8 +25,8 @@ def index(request):
 def new(request):
     ctx = {}
     overtimeForm = OvertimeForm()
-    ctx['model'] = User.objects.get(id=request.session["_auth_user_id"]).get_profile()
-    ctx['employees'] = Employee.objects.all()
+    ctx['model'] = request.user
+    ctx['employees'] = User.objects.all()
     ctx['form'] = overtimeForm
     if request.method == 'POST':
         overtimeForm = OvertimeForm(request.POST)
@@ -41,24 +40,3 @@ def new(request):
             return HttpResponseRedirect(reverse('ot_idx'))
     return render(request, 'overtimeForm.html', ctx)
 
-@login_required
-def edit(request, id):
-    edit_app = get_object_or_404(Application, id=id)
-    appForm = ApplicationForm(instance=edit_app)
-    if request.method=='POST':
-        appForm = ApplicationForm(request.POST, instance=edit_app)
-        if appForm.is_valid():
-            appForm.save()
-            return HttpResponseRedirect(reverse('ot_idx'))
-    return render(request, 'form.html', {'form':appForm})
-
-@login_required
-def delete(request, id):
-    del_app = get_object_or_404(Application, id=id)
-    del_app.delete()
-    return HttpResponseRedirect(reverse('ot_idx'))
-
-@login_required
-def show(request, id):
-    del_app = get_object_or_404(Application, id=id)
-    return HttpResponseRedirect(reverse('ot_idx'))

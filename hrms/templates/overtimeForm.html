@@ -11,7 +11,7 @@
             加班原因：{{ form.reason }}<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;加班人：
             {% for employee in employees %}
-                <input type="checkbox" name="employee" value="{{employee.id}}">{{ employee.name }}
+                <input type="checkbox" name="employee" value="{{employee.id}}">{{ employee.username }}
             {% endfor %}
             <br/>
 

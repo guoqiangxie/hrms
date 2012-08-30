@@ -21,13 +21,14 @@ def apply(request, id):
     ctx['model'] = user
     if request.method == 'POST':
         appForm = apply_trackform(request.POST)
-        status = appForm.cleaned_data['status']
-        if status == 'on':
-            approval_note = appForm.cleaned_data['approval_note']
-            apply_track(type='DEPART', approval_note=approval_note, approval=user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
-            edit_app.status = 'APPLY'
-            edit_app.save()
-            return render(request, 'index.html')
+        if appForm.is_valid():
+            status = appForm.cleaned_data['status']
+            if status == 'on':
+                approval_note = appForm.cleaned_data['approval_note']
+                apply_track(type='DEPART', approval_note=approval_note, approval=user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
+                edit_app.status = 'APPLY'
+                edit_app.save()
+                return render(request, 'index.html')
     refs = Employee_overtimeform_ref.objects.filter(overtimeform=edit_app)
     employees = []
     for ref in refs:

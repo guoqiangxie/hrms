@@ -8,11 +8,11 @@
                 加班原因：{{overtimeform.reason}}<br/>
                 &nbsp;&nbsp;&nbsp;&nbsp;加班人：
                 {% for employee in employees %}
-                    {{employee.name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{employee.username}}&nbsp;&nbsp;&nbsp;&nbsp;
                 {% endfor %}
                 <br/>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态：{{overtimeform.status}}<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;申请人：{{overtimeform.applyer.name}}<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;申请人：{{overtimeform.applyer.username}}<br/>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注：{{overtimeform.remark}}<br/>
             <form action="" method="post">
                 {% csrf_token %}

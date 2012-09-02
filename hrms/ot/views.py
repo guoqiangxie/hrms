@@ -6,16 +6,16 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from hrms.ot.models import  Overtimeform, Employee_overtimeform_ref
+from hrms.ot.models import overtimeform, employee_overtimeform_ref
 
 
 class OvertimeForm(forms.ModelForm):
     class Meta:
-        model = Overtimeform
+        model = overtimeform
 
 class Employee_overtimeform_refForm(forms.ModelForm):
     class Meta:
-        model = Employee_overtimeform_ref
+        model = employee_overtimeform_ref
 
 @login_required
 def index(request):

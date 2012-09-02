@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django import forms
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
-from hrms.ot.models import Overtimeform, Employee_overtimeform_ref, apply_track
+from hrms.ot.models import overtimeform, employee_overtimeform_ref, apply_track
 
 class apply_trackform(forms.Form):
     status = forms.CharField(label='同意审批', widget=forms.CheckboxInput)
@@ -13,7 +13,7 @@ class apply_trackform(forms.Form):
 
 @login_required
 def apply(request, id):
-    edit_app = get_object_or_404(Overtimeform, id=id)
+    edit_app = get_object_or_404(overtimeform, id=id)
     ctx = {}
     ctx['overtimeform'] = edit_app
     ctx['applyform'] = apply_trackform()
@@ -39,7 +39,7 @@ def apply(request, id):
 @login_required
 def applyFormList(request):
     ctx = {}
-    ctx['applyFormList'] = Overtimeform.objects.filter(status='NEW')
+    ctx['applyFormList'] = overtimeform.objects.filter(status='NEW')
     return render(request, 'applyFormList.html', ctx)
 
 @login_required

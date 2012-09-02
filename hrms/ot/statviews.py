@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-from django import forms
-from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
-from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
 def index(request):
     ctx = {}

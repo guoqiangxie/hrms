@@ -3,9 +3,8 @@
 import datetime
 from django.contrib.auth.decorators import login_required
 from django import forms
-from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
-from hrms.ot.models import overtimeform, employee_overtimeform_ref, apply_track
+from hrms.ot.models import overtimeform, apply_track
 
 class apply_trackform(forms.Form):
     status = forms.CharField(label='同意审批', widget=forms.CheckboxInput)

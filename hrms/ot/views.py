@@ -30,7 +30,7 @@ def new(request):
     ctx['form'] = overtimeForm
     user =  request.user
 #    测试权限处理
-    print(user.has_perm("show_apply_track"))
+    print(user.has_perm("ot.show_apply_track"))
     if request.method == 'POST':
         overtimeForm = OvertimeForm(request.POST)
         if overtimeForm.is_valid():

@@ -28,11 +28,6 @@ def new(request):
     ctx['model'] = request.user
     ctx['employees'] = User.objects.all()
     ctx['form'] = overtimeForm
-    user =  request.user
-#    测试权限处理
-    print(user.has_perm("ot.show_apply_track"))
-    print(user.get_group_permissions())
-    print(user.has_perm("auth.add_user"))
     if request.method == 'POST':
         overtimeForm = OvertimeForm(request.POST)
         if overtimeForm.is_valid():

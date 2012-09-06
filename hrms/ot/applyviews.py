@@ -4,7 +4,7 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django import forms
 from django.shortcuts import render, get_object_or_404
-from hrms.ot.models import overtimeform, apply_track
+from hrms.ot.models import overtimeform, apply_track, employee_overtimeform_ref
 
 class apply_trackform(forms.Form):
     status = forms.CharField(label='同意审批', widget=forms.CheckboxInput)
@@ -16,8 +16,6 @@ def apply(request, id):
     ctx = {}
     ctx['overtimeform'] = edit_app
     ctx['applyform'] = apply_trackform()
-    user = request.user
-    ctx['model'] = user
     if request.method == 'POST':
         appForm = apply_trackform(request.POST)
         if appForm.is_valid():
@@ -28,7 +26,7 @@ def apply(request, id):
                 edit_app.status = 'APPLY'
                 edit_app.save()
                 return render(request, 'index.html')
-    refs = Employee_overtimeform_ref.objects.filter(overtimeform=edit_app)
+    refs = employee_overtimeform_ref.objects.filter(overtimeform=edit_app)
     employees = []
     for ref in refs:
         employees.append(ref.employee)

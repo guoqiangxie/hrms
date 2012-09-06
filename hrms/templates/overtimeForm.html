@@ -6,13 +6,7 @@
 
         <form action="" method="post">
             {% csrf_token %}
-            {% if perms.auth.add_user %}
-                has add user perm
-            {% endif %}
-            {% if perms.ot.show_apply_track %}
-                has show apply track perm
-            {% endif %}
-            {{ user.username }}开始时间：{{ form.begintime }}<br/>
+            开始时间：{{ form.begintime }}<br/>
             结束时间：{{ form.endtime }}<br/>
             加班原因：{{ form.reason }}<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;加班人：

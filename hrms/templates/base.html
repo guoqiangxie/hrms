@@ -34,7 +34,7 @@
             {% if perms.ot.apply_overtimeform %}
                 <li><a href="{% url ot_new %}">申请加班</a></li>
             {% endif %}
-            <li><a href="{% url ot_applyFormList %}">部门审批</a></li>
+            <li><a href="{% url ot_applyFormList %}">部门确认</a></li>
             {% if perms.ot.hr_audit_overtimeform %}
                 <li>人事审批</li>
             {% endif %}

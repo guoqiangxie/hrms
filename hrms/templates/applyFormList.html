@@ -12,7 +12,7 @@
                         {{ overtimeform.status }}
                         <a href="{% url ot_overtime_detail overtimeform.id %}">详情</a>
                         {% if perms.ot.depart_confirm_overtimeform %}
-                            <a href="{% url ot_apply overtimeform.id %}">审核</a>
+                            <a href="{% url ot_apply overtimeform.id %}">确认</a>
                         {% endif %}
                     </li>
                 {% endfor %}

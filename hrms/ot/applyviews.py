@@ -44,3 +44,15 @@ def confirm(request, id):
     ctx = {}
     return render(request, 'index.html', ctx)
 
+@login_required
+def overtimedetail(request, id):
+    edit_app = get_object_or_404(overtimeform, id=id)
+    ctx = {}
+    ctx['overtimeform'] = edit_app
+    refs = employee_overtimeform_ref.objects.filter(overtimeform=edit_app)
+    employees = []
+    for ref in refs:
+        employees.append(ref.employee)
+    ctx['employees'] = employees
+    return render(request, 'overtimedetail.html', ctx)
+

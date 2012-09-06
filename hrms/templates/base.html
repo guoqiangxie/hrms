@@ -31,11 +31,13 @@
     <div class="span-3 colborder">
         <h6>目录</h6>
         <ul>
-            <li><a href="{% url ot_new %}">申请加班</a></li>
-            {% if perms.ot.show_overtimeform %}
-                <li><a href="{% url ot_applyFormList %}">部门审批</a></li>
+            {% if perms.ot.apply_overtimeform %}
+                <li><a href="{% url ot_new %}">申请加班</a></li>
             {% endif %}
-            <li>人事审批</li>
+            <li><a href="{% url ot_applyFormList %}">部门审批</a></li>
+            {% if perms.ot.hr_audit_overtimeform %}
+                <li>人事审批</li>
+            {% endif %}
             <li>加班查询</li>
             <li>加班统计</li>
             <li>加班确认</li>

@@ -1,8 +1,7 @@
 #coding=utf-8
 from django.contrib.auth.models import User
-
 from django.db import models
-
+import datetime
 
 class overtimeform(models.Model):
     '''加班申请单
@@ -21,8 +20,17 @@ class overtimeform(models.Model):
     status = models.CharField(max_length=5)
 
     def __unicode__(self):
-        return self.applyer + self.reason
-
+        return self.applyer.username + ', ' + self.reason
+        
+    @property
+    def total_time(self):
+        begin = self.begintime
+        if self.begintime.hour < 19:
+            begin = datetime.datetime(self.begintime.year, self.begintime.month, self.begintime.day, 19, 0, 0)
+        total = int((self.endtime-begin).total_seconds()/3600)
+        if total < 0:
+            total = 0
+        return total
 
 class employee_overtimeform_ref(models.Model):
     '''员工加班中间表

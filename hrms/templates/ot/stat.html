@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="box post">
+  <div id="new_app">
+    <a class="linkbutton" href="{% url ot_export %}">导出报表</a>
+  </div>
+   <div id="app-list-title" class="clear">
+      <div class="float_right">
+        <span id="date_filter" onclick="showDatePicker();">{{ date_filter }}</span>
+      </div>
+      <h2>加班统计</h2>
+    </div>
+    <h3>基本信息</h3>
+    <table>
+      <tr><td>姓名</td><td>{{ request.user.username }}</td></tr>
+      <tr><td>部门</td><td></td></tr>
+      <tr><td>入职日期</td><td></td></tr>
+      <tr><td>已休年假天数</td><td></td></tr>
+      <tr><td>年假剩余天数</td><td></td></tr>
+    </table>
+    <br>
+    <h3>加班信息</h3>
+    <table>
+      <tr><th></th><th>原因</th><th>开始时间</th><th>结束时间</th><th>加班时间(小时)</th></tr>
+      {% for overtime in overtimes %}
+      <tr><td>{{ forloop.counter }}</td><td>{{ overtime.reason }}</td><td>{{ overtime.begintime|date:"Y年n月j日 H:i" }}</td><td>{{ overtime.endtime|date:"Y年n月j日 H:i" }}</td><td>{{ overtime.total_time }}</td></tr>
+      {% endfor %}
+    </table>
+</div>
+
+{% endblock %}
+

@@ -17,8 +17,8 @@
                 {% for overtimeform in applyFormList %}
                     <tr>
                         <td>{{ overtimeform.applyer }}</td>
-                        <td>{{ overtimeform.begintime }}</td>
-                        <td>{{ overtimeform.endtime }}</td>
+                        <td>{{ overtimeform.begintime|date:'Y年m月d日 H:i' }}</td>
+                        <td>{{ overtimeform.endtime|date:'Y年m月d日 H:i' }}</td>
                         <td>{{ overtimeform.status }}</td>
                         <td><a href="{% url ot_overtime_detail overtimeform.id %}">详情</a></td>
                         <td>{% if perms.ot.depart_confirm_overtimeform %}

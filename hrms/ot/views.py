@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 from django import forms
+from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from hrms.ot.models import overtimeform, employee_overtimeform_ref, userpermission
+from hrms.ot.models import overtimeform, employee_overtimeform_ref
 import datetime
 import xlwt
 from django.utils.encoding import smart_str
@@ -22,6 +23,10 @@ class Employee_overtimeform_refForm(forms.ModelForm):
 @login_required
 def index(request):
     return render(request, 'index.html')
+
+def page_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
 
 @login_required
 def new(request):

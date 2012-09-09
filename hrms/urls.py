@@ -20,7 +20,7 @@ urlpatterns = patterns(  # Examples:
     url(r'^ot/', include('ot.urls')),
     url(r'^accounts/login/$', login, {'template_name': 'ot/login.html'
         }),
-    url(r'^accounts/logout/$', logout),
+    url(r'^accounts/logout/$', 'ot.views.page_logout',  name='logout'),
     )
 
 urlpatterns += staticfiles_urlpatterns()

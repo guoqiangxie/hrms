@@ -2,20 +2,31 @@
 
 {% block content %} 
         <div class="box post">
-            <ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>申请人</th>
+                        <th>加班开始时间</th>
+                        <th>加班结束时间</th>
+                        <th>加班单状态</th>
+                        <th>查看详情</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
                 {% for overtimeform in applyFormList %}
-                    <li>
-                        {{ overtimeform.begintime }}
-                        {{ overtimeform.endtime }}
-                        {{ overtimeform.reason }}
-                        {{ overtimeform.applyer }}
-                        {{ overtimeform.status }}
-                        <a href="{% url ot_overtime_detail overtimeform.id %}">详情</a>
-                        {% if perms.ot.depart_confirm_overtimeform %}
+                    <tr>
+                        <td>{{ overtimeform.applyer }}</td>
+                        <td>{{ overtimeform.begintime }}</td>
+                        <td>{{ overtimeform.endtime }}</td>
+                        <td>{{ overtimeform.status }}</td>
+                        <td><a href="{% url ot_overtime_detail overtimeform.id %}">详情</a></td>
+                        <td>{% if perms.ot.depart_confirm_overtimeform %}
                             <a href="{% url ot_apply overtimeform.id %}">确认</a>
-                        {% endif %}
-                    </li>
+                        {% endif %}</td>
+                    </tr>
                 {% endfor %}
-            </ul>
+                </tbody>
+            </table>
         </div>
 {% endblock %}

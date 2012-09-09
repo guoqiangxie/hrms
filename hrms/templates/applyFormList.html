@@ -21,9 +21,18 @@
                         <td>{{ overtimeform.endtime|date:'Y年m月d日 H:i' }}</td>
                         <td>{{ overtimeform.status }}</td>
                         <td><a href="{% url ot_overtime_detail overtimeform.id %}">详情</a></td>
-                        <td>{% if perms.ot.depart_confirm_overtimeform %}
-                            <a href="{% url ot_apply overtimeform.id %}">确认</a>
-                        {% endif %}</td>
+                        <td>
+                            {% if perms.ot.depart_confirm_overtimeform %}
+                                {% ifequal overtimeform.status 'NEW' %}
+                                    <a href="{% url ot_apply overtimeform.id %}">确认</a>
+                                {% endifequal %}
+                            {% endif %}
+                            {% if perms.ot.hr_audit_overtimeform %}
+                                {% ifequal overtimeform.status 'APPLY' %}
+                                    <a href="{% url ot_apply overtimeform.id %}">审核</a>
+                                {% endifequal %}
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

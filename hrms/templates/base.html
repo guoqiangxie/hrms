@@ -36,7 +36,7 @@
             {% endif %}
             <li><a href="{% url ot_applyFormList %}">部门确认</a></li><br>
             {% if perms.ot.hr_audit_overtimeform %}
-                <li>人事审批</li><br>
+                <li><a href="{% url ot_auditFormList %}">人事审批</a></li><br>
             {% endif %}
             <li>加班查询</li><br>
             <li><a href="{% url ot_stat %}">加班统计</a></li><br>

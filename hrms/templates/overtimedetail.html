@@ -2,17 +2,33 @@
 
 {% block content %}
     <div class="box post">
-
-        开始时间：{{ overtimeform.begintime }}<br/>
-        结束时间：{{ overtimeform.endtime }}<br/>
-        加班原因：{{ overtimeform.reason }}<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;加班人：
-        {% for employee in employees %}
-            {{ employee.username }}&nbsp;&nbsp;&nbsp;&nbsp;
-        {% endfor %}
-        <br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态：{{ overtimeform.status }}<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;申请人：{{ overtimeform.applyer.username }}<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注：{{ overtimeform.remark }}<br/>
+        <table>
+            <tr align="right">
+                <td style="text-align: right;">开始时间：</td><td>{{ overtimeform.begintime|date:'Y年m月d日 H:i'  }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">结束时间：</td><td>{{ overtimeform.endtime|date:'Y年m月d日 H:i'  }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">加班原因：</td><td>{{ overtimeform.reason }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">加班人：</td>
+                <td>
+                    {% for employee in employees %}
+                        {{ employee.username }}&nbsp;&nbsp;&nbsp;&nbsp;
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">状态：</td><td>{{ overtimeform.status }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">申请人：</td><td>{{ overtimeform.applyer.username }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">备注：</td><td>{{ overtimeform.remark }}</td>
+            </tr>
+        </table>
     </div>
 {% endblock %}

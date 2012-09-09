@@ -22,7 +22,7 @@ def apply(request, id):
             status = appForm.cleaned_data['status']
             if status == 'on':
                 approval_note = appForm.cleaned_data['approval_note']
-                apply_track(type='DEPART', approval_note=approval_note, approval=user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
+                apply_track(type='DEPART', approval_note=approval_note, approval=request.user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
                 edit_app.status = 'APPLY'
                 edit_app.save()
                 return render(request, 'index.html')
@@ -37,6 +37,12 @@ def apply(request, id):
 def applyFormList(request):
     ctx = {}
     ctx['applyFormList'] = overtimeform.objects.filter(status='NEW')
+    return render(request, 'applyFormList.html', ctx)
+
+@login_required
+def auditFormList(request):
+    ctx = {}
+    ctx['applyFormList'] = overtimeform.objects.filter(status='APPLY')
     return render(request, 'applyFormList.html', ctx)
 
 @login_required

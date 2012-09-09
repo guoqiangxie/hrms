@@ -2,17 +2,17 @@
 
 {% block content %}
     <div class="box post">
-        <h2>新增</h2>
+        <h2>申请加班单</h2>
 
         <form action="" method="post">
             {% csrf_token %}
             开始时间：{{ form.begintime }}<br/>
             结束时间：{{ form.endtime }}<br/>
             加班原因：{{ form.reason }}<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;加班人：
+            <div align="left">加班人：
             {% for employee in employees %}
                 <input type="checkbox" name="employee" value="{{employee.id}}">{{ employee.username }}
-            {% endfor %}
+            {% endfor %}</div>
             <br/>
 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注：{{ form.remark }}

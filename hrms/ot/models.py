@@ -1,62 +1,47 @@
-#coding=utf-8
+#!/usr/bin/env python
+# coding: utf-8
 from django.contrib.auth.models import User
 from django.db import models
-import datetime
 
-class overtimeform(models.Model):
+
+class Overtime(models.Model):
     '''加班申请单
     '''
-    #   加班开始时间
     begintime = models.DateTimeField()
-    #   加班结束时间
     endtime = models.DateTimeField()
-    #   加班理由
     reason = models.CharField(max_length=255)
-    #   备注
     remark = models.CharField(max_length=255)
-    #   申请人
-    applyer = models.ForeignKey(User)
-    #   状态
     status = models.CharField(max_length=5)
+    apper = models.ForeignKey(User)
 
     def __unicode__(self):
-        return self.applyer.username + ', ' + self.reason
-        
+        return self.apper.username + ', ' + self.reason
+
     @property
     def total_time(self):
-        begin = self.begintime
-        if self.begintime.hour < 19:
-            begin = datetime.datetime(self.begintime.year, self.begintime.month, self.begintime.day, 19, 0, 0)
-        total = int((self.endtime-begin).total_seconds()/3600)
-        if total < 0:
-            total = 0
-        return total
+        initTime = self.begintime.replace(hour=19, minute=0, second=0)
+        begin = max(initTime, self.begintime)
+        return max(0, int((self.endtime - begin).total_seconds() / 3600))
 
-class employee_overtimeform_ref(models.Model):
+
+class OvertimeRef(models.Model):
     '''员工加班中间表
     '''
-    #    员工
     employee = models.ForeignKey(User)
-    #    加班申请单
-    overtimeform = models.ForeignKey(overtimeform)
+    overtimeform = models.ForeignKey(Overtime)
 
     def __unicode__(self):
         return self.employee + self.overtimeform
 
 
-class apply_track(models.Model):
+class ApplyTrack(models.Model):
     '''审批流程
     '''
-    #    加班申请单
-    overtimeform = models.ForeignKey(overtimeform)
-    #    审批人
+    overtimeform = models.ForeignKey(Overtime)
     approval = models.ForeignKey(User)
-    #    审批意见
     approval_note = models.CharField(max_length=255)
-    #    审批时间
     apply_date = models.DateTimeField()
-    #    审批类型
-    type = models.CharField(max_length=10)
+    apply_type = models.CharField(max_length=10)
 
     def __unicode__(self):
         return self.approval + self.overtimeform + self.type

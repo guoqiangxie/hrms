@@ -7,57 +7,64 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from hrms.ot.models import overtimeform, employee_overtimeform_ref
+from ot.models import Overtime, OvertimeRef
 import datetime
 import xlwt
 from django.utils.encoding import smart_str
 
-class OvertimeForm(forms.ModelForm):
-    class Meta:
-        model = overtimeform
 
-class Employee_overtimeform_refForm(forms.ModelForm):
+class FOvertime(forms.ModelForm):
     class Meta:
-        model = employee_overtimeform_ref
+        model = Overtime
+
+
+class FOvertimeRef(forms.ModelForm):
+    class Meta:
+        model = OvertimeRef
+
 
 @login_required
 def index(request):
     return render(request, 'index.html')
 
+
 def page_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+
 @login_required
 def new(request):
     ctx = {}
-    overtimeForm = OvertimeForm()
+    overtimeForm = FOvertime()
     ctx['model'] = request.user
     ctx['employees'] = User.objects.all()
     ctx['form'] = overtimeForm
     if request.method == 'POST':
-        overtimeForm = OvertimeForm(request.POST)
+        overtimeForm = FOvertime(request.POST)
         if overtimeForm.is_valid():
             overtimeForm = overtimeForm.save()
             overtimeFormId = overtimeForm.id
-            oterIds =  request.REQUEST.getlist('employee')
+            oterIds = request.REQUEST.getlist('employee')
             for oterId in oterIds:
-                employee_overtimeform_ref = Employee_overtimeform_refForm({'employee': oterId, 'overtimeform':overtimeFormId})
+                employee_overtimeform_ref = OvertimeRef({'employee': oterId, 'overtimeform': overtimeFormId})
                 employee_overtimeform_ref.save()
             return HttpResponseRedirect(reverse('ot_idx'))
     return render(request, 'overtimeForm.html', ctx)
 
+
 @login_required
 def stat(request):
     ctx = {}
-    overtimes = overtimeform.objects.all()
+    overtimes = FOvertime.objects.all()
     ctx['overtimes'] = overtimes
     return render(request, 'ot/stat.html', ctx)
-    
+
+
 @login_required
 def export(request):
-    overtimes = overtimeform.objects.all()
-    
+    overtimes = FOvertime.objects.all()
+
     wb = xlwt.Workbook()
     ws = wb.add_sheet('Sheet')
 
@@ -68,13 +75,13 @@ def export(request):
     ws.write(3, 0, u'入职日期')
     ws.write(4, 0, u'已休年假天数')
     ws.write(5, 0, u'年假剩余天数')
-    
+
     ws.write(7, 0, u'加班信息')
     ws.write(8, 1, u'原因')
     ws.write(8, 2, u'开始时间')
     ws.write(8, 3, u'结束时间')
     ws.write(8, 4, u'加班时间(小时)')
-    
+
     i = 0
     for overtime in overtimes:
         ws.write(9+i, 0, i+1)

@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 from django import forms
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render
+from django.utils.encoding import smart_str
 from ot.models import Overtime, OvertimeRef
 import datetime
 import xlwt
-from django.utils.encoding import smart_str
 
 
 class FOvertime(forms.ModelForm):
@@ -21,14 +22,14 @@ def index(request):
 @login_required
 def stat(request):
     ctx = {}
-    overtimes = FOvertime.objects.all()
+    overtimes = Overtime.objects.all()
     ctx['overtimes'] = overtimes
     return render(request, 'ot/stat.html', ctx)
 
 
 @login_required
 def export(request):
-    overtimes = FOvertime.objects.all()
+    overtimes = Overtime.objects.all()
 
     wb = xlwt.Workbook()
     ws = wb.add_sheet('Sheet')

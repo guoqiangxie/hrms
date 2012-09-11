@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load ot_extra %}
+{% block content %}
+<div>
+	<fieldset>
+		<legend>
+			加班申请单
+		</legend>
+		<ul class="form">
+			<li>
+				<label>开始时间：</label>
+				{{ overtimeform.begintime|date:'Y年m月d日 H:i' }}
+			</li>
+			<li>
+				<label>结束时间：</label>
+				{{ overtimeform.endtime|date:'Y年m月d日 H:i' }}
+			</li>
+			<li>
+				<label>加班原因：</label>
+				{{ overtimeform.reason }}
+			</li>
+			<li>
+				<label>加班人员：</label>
+				{% for employee in employees %}
+				{{ employee.username }}
+				{% endfor %}
+			</li>
+			<li>
+				<label>备注：</label>
+				{{ overtimeform.remark }}
+			</li>
+			<li>
+				<label>状态：</label>
+				{{ overtimeform.status|screenname }}
+			</li>
+			<li>
+				<label>申请人：</label>
+				{{ overtimeform.apper.username }}
+			</li>
+		</ul>
+	</fieldset>
+
+</div>
+{% endblock %}

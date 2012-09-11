@@ -61,7 +61,6 @@ def confirm(request, id):
         if appForm.is_valid():
             status = appForm.cleaned_data['status']
             if status == 'on':
-                print appForm
                 approval_note = appForm.cleaned_data['approval_note']
                 ApplyTrack(apply_type='HR', approval_note=approval_note, approval=request.user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
                 edit_app.status = 'AU'
@@ -77,15 +76,5 @@ def confirm(request, id):
     return render(request, 'apply.html', ctx)
 
 
-@login_required
-def overtimedetail(request, id):
-    edit_app = get_object_or_404(Overtime, id=id)
-    ctx = {}
-    ctx['overtimeform'] = edit_app
-    refs = OvertimeRef.objects.filter(overtimeform=edit_app)
-    employees = []
-    for ref in refs:
-        employees.append(ref.employee)
-    ctx['employees'] = employees
-    return render(request, 'overtimedetail.html', ctx)
+
 

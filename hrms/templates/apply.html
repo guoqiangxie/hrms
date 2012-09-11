@@ -1,25 +1,65 @@
 {% extends "base.html" %}
+{% load ot_extra %}
+{% block content %}
+<div>
+	<fieldset>
+		<legend>
+			加班申请单
+		</legend>
+		<ul class="form">
+			<li>
+				<label>开始时间：</label>
+				{{ overtimeform.begintime|date:'Y年m月d日 H:i' }}
+			</li>
+			<li>
+				<label>结束时间：</label>
+				{{ overtimeform.endtime|date:'Y年m月d日 H:i' }}
+			</li>
+			<li>
+				<label>加班原因：</label>
+				{{ overtimeform.reason }}
+			</li>
+			<li>
+				<label>加班人员：</label>
+				{% for employee in employees %}
+				{{ employee.username }}
+				{% endfor %}
+			</li>
+			<li>
+				<label>备注：</label>
+				{{ form.remark }}
+			</li>
+			<li>
+				<label>状态：</label>
+				{{ overtimeform.status|screenname }}
+			</li>
+			<li>
+				<label>申请人：</label>
+				{{ overtimeform.apper.username }}
+			</li>
+		</ul>
+	</fieldset>
 
-{% block content %} 
-        <div class="box post">
-
-                开始时间：{{overtimeform.begintime}}<br/>
-                结束时间：{{overtimeform.endtime}}<br/>
-                加班原因：{{overtimeform.reason}}<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;加班人：
-                {% for employee in employees %}
-                    {{employee.username}}&nbsp;&nbsp;&nbsp;&nbsp;
-                {% endfor %}
-                <br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态：{{overtimeform.status}}<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;申请人：{{overtimeform.applyer.username}}<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注：{{overtimeform.remark}}<br/>
-            <form action="" method="post">
-                {% csrf_token %}
-                {{ applyform.as_p }}
-                <p>
-                    <input type="submit" class="submit" value="提交" />
-                </p>
-            </form>
-        </div>
+	<form action="" method="post">
+		{% csrf_token %}
+		<fieldset>
+			<legend>
+				审批单
+			</legend>
+			<ul class="form">
+				<li>
+					<label>同意审批：</label>
+					{{ applyform.status }}
+				</li>
+				<li>
+					<label>审批意见：</label>
+					{{ applyform.approval_note }}
+				</li>
+				<li>
+					<input type="submit" class="submit" value="提交" />
+				</li>
+			</ul>
+		</fieldset>
+	</form>
+</div>
 {% endblock %}

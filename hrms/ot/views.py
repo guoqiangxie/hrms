@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from ot.models import Overtime, OvertimeRef
@@ -41,7 +41,7 @@ def new(request):
             otf.save()
             for oterId in request.REQUEST.getlist('employee'):
                 OvertimeRef(employee_id=oterId, overtimeform_id=ot.id).save()
-            return HttpResponseRedirect(reverse('ot_idx'))
+            return redirect(reverse('ot_idx'))
         else:
             print 'form is not valid', otf.errors
     return render(request, 'overtimeForm.html', ctx)

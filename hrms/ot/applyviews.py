@@ -3,7 +3,8 @@
 import datetime
 from django.contrib.auth.decorators import login_required
 from django import forms
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.core.urlresolvers import reverse
 from ot.models import Overtime, ApplyTrack, OvertimeRef
 
 
@@ -23,11 +24,14 @@ def apply(request, id):
         if appForm.is_valid():
             status = appForm.cleaned_data['status']
             if status == 'on':
+                print appForm
                 approval_note = appForm.cleaned_data['approval_note']
-                ApplyTrack(type='DEPART', approval_note=approval_note, approval=request.user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
+                ApplyTrack(apply_type='DEPART', approval_note=approval_note, approval=request.user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
                 edit_app.status = 'APPLY'
                 edit_app.save()
-                return render(request, 'index.html')
+                return redirect(reverse('ot_idx'))
+        else:
+            print 'form is not valid:', appForm.errors
     refs = OvertimeRef.objects.filter(overtimeform=edit_app)
     employees = []
     for ref in refs:
@@ -38,22 +42,39 @@ def apply(request, id):
 
 @login_required
 def applyFormList(request):
-    ctx = {}
-    ctx['applyFormList'] = Overtime.objects.filter(status='NEW')
-    return render(request, 'applyFormList.html', ctx)
+    return redirect(reverse('ot_idx'))
 
 
 @login_required
 def auditFormList(request):
-    ctx = {}
-    ctx['applyFormList'] = Overtime.objects.filter(status='APPLY')
-    return render(request, 'applyFormList.html', ctx)
+    return redirect(reverse('ot_idx'))
 
 
 @login_required
 def confirm(request, id):
+    edit_app = get_object_or_404(Overtime, id=id)
     ctx = {}
-    return render(request, 'index.html', ctx)
+    ctx['overtimeform'] = edit_app
+    ctx['applyform'] = apply_trackform()
+    if request.method == 'POST':
+        appForm = apply_trackform(request.POST)
+        if appForm.is_valid():
+            status = appForm.cleaned_data['status']
+            if status == 'on':
+                print appForm
+                approval_note = appForm.cleaned_data['approval_note']
+                ApplyTrack(apply_type='HR', approval_note=approval_note, approval=request.user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
+                edit_app.status = 'AU'
+                edit_app.save()
+                return redirect(reverse('ot_idx'))
+        else:
+            print 'form is not valid:', appForm.errors
+    refs = OvertimeRef.objects.filter(overtimeform=edit_app)
+    employees = []
+    for ref in refs:
+        employees.append(ref.employee)
+    ctx['employees'] = employees
+    return render(request, 'apply.html', ctx)
 
 
 @login_required

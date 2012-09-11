@@ -8,7 +8,8 @@ class Overtime(models.Model):
     '''加班申请单
     '''
     STATE_CHOICES = ((u'NEW', u'create'),
-                     (u'AD', u'audit'),
+                     (u'APPLY', u'apply'),
+                     (u'AU', u'audit'),
                      (u'CF', u'confirm'),
                      (u'CAN', u'cancel'),
                      (u'DC', u'decline'),

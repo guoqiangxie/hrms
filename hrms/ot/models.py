@@ -7,11 +7,17 @@ from django.db import models
 class Overtime(models.Model):
     '''加班申请单
     '''
+    STATE_CHOICES = ((u'NEW', u'create'),
+                     (u'AD', u'audit'),
+                     (u'CF', u'confirm'),
+                     (u'CAN', u'cancel'),
+                     (u'DC', u'decline'),
+                     )
     begintime = models.DateTimeField()
     endtime = models.DateTimeField()
     reason = models.CharField(max_length=255)
     remark = models.CharField(max_length=255)
-    status = models.CharField(max_length=5)
+    status = models.CharField(max_length=5, choices=STATE_CHOICES)
     apper = models.ForeignKey(User)
 
     def __unicode__(self):

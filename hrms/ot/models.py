@@ -57,7 +57,6 @@ class ApplyTrack(models.Model):
 class userpermission(models.Model):
     class Meta:
         permissions = (
-            ("apply_overtimeform", "Can apply overtimeform"),
             ("depart_confirm_overtimeform", "Depart director confirm overtimeform"),
-            ("hr_audit_overtimeform", "Hr audit audit overtimeform"),
+            ("hr_audit_overtimeform", "Hr audit overtimeform"),
         )

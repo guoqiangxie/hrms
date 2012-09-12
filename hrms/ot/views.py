@@ -3,13 +3,12 @@
 from django import forms
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from ot.models import Overtime, OvertimeRef
-import datetime
-from django.forms.widgets import Widget, Textarea
+from django.forms.widgets import  Textarea
 
 
 class FOvertime(forms.ModelForm):
@@ -18,6 +17,17 @@ class FOvertime(forms.ModelForm):
         widgets = {'remark':Textarea(attrs={'cols':80, 'rows':10}),
                    }
 
+class ResetPwdForm(forms.Form):
+    oldPwd = forms.CharField(widget=forms.PasswordInput)
+    newPwd = forms.CharField(widget=forms.PasswordInput)
+    confirmPwd = forms.CharField(widget=forms.PasswordInput)
+    def clean_confirmPwd(self):
+        if 'newPwd' in self.cleaned_data:
+            password1=self.cleaned_data['newPwd']
+            password2=self.cleaned_data['confirmPwd']
+            if password1==password2:
+                return password2
+        raise forms.ValidationError('两次密码不一样')
 
 def page_logout(request):
     logout(request)
@@ -25,7 +35,16 @@ def page_logout(request):
 
 @login_required
 def resetPassword(request):
-    return render(request, 'resetPassword.html')
+    resetPwdForm = ResetPwdForm()
+    ctx = {}
+    ctx['resetPwdForm'] = resetPwdForm
+    if request.method == 'POST':
+        resetPwdForm = ResetPwdForm(request.POST)
+        if resetPwdForm.is_valid():
+            return render(request, 'resetPassword.html', ctx)
+        else:
+            return render_to_response('resetPassword.html', {'resetPwdForm': resetPwdForm})
+    return render(request, 'resetPassword.html', ctx)
 
 
 @login_required

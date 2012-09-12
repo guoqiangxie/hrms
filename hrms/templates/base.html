@@ -27,7 +27,7 @@
 <body>
 <div class="container">
 {% if request.user.is_authenticated %}
-欢迎你，{{ request.user.username }}。<a href="{% url logout %}">修改密码</a> <a href="{% url logout %}">退出</a>
+欢迎你，{{ request.user.username }}。<a href="{% url ot_resetPwd %}">修改密码</a> <a href="{% url logout %}">退出</a>
 {% endif %}
     <h1 align="center">锦江电商加班管理系统</h1>
     <hr>

@@ -5,6 +5,7 @@ from django.conf.urls.defaults import patterns, url
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'ot.views.index', name='ot_idx'),
+    url(r'^resetPwd$', 'ot.views.resetPassword', name='ot_resetPwd'),
     url(r'^new/$', 'ot.views.new', name='ot_new'),
     url(r'^(?P<id>\d+)/apply/$', 'ot.applyviews.apply', name='ot_apply'),
     url(r'^(?P<id>\d+)/view/$', 'ot.views.detail', name='ot_overtime_detail'),

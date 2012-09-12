@@ -23,6 +23,10 @@ def page_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+@login_required
+def resetPassword(request):
+    return render(request, 'resetPassword.html')
+
 
 @login_required
 def new(request):

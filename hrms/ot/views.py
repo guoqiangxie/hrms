@@ -41,8 +41,11 @@ def resetPassword(request):
     ctx['resetPwdForm'] = resetPwdForm
     if request.method == 'POST':
         resetPwdForm = ResetPwdForm(request.POST)
-        if resetPwdForm.is_valid():
-            return render(request, 'resetPassword.html', ctx)
+        user = request.user
+        if resetPwdForm.is_valid() and user.check_password(resetPwdForm.cleaned_data['oldPwd']):
+            user.set_password(resetPwdForm.cleaned_data['confirmPwd'])
+            user.save()
+            return redirect(reverse('logout'))
         else:
             return render_to_response('resetPassword.html', {'resetPwdForm': resetPwdForm})
     return render(request, 'resetPassword.html', ctx)

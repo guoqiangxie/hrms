@@ -1,1 +1,15 @@
-set mysql character to utf8
+1. set mysql character to utf8
+
+
+todo list
+1. 加班单处理后邮件通知下一步相关人员
+2. 统计规则讨论
+3. 导出excel格式
+4. 页面样式
+5. 部门、权限问题
+6. 初始化DB
+7. 确认时、审批时被打回的单的处理
+8. 列表分页
+9. 查询时只查本部门单
+10. 修改密码（john）
+11. 页面展示登录用户信息（john）

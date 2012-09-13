@@ -42,10 +42,14 @@ def resetPassword(request):
     if request.method == 'POST':
         resetPwdForm = ResetPwdForm(request.POST)
         user = request.user
-        if resetPwdForm.is_valid() and user.check_password(resetPwdForm.cleaned_data['oldPwd']):
-            user.set_password(resetPwdForm.cleaned_data['confirmPwd'])
-            user.save()
-            return redirect(reverse('logout'))
+        if resetPwdForm.is_valid():
+            if user.check_password(resetPwdForm.cleaned_data['oldPwd']):
+                user.set_password(resetPwdForm.cleaned_data['confirmPwd'])
+                user.save()
+                return redirect(reverse('logout'))
+            else:
+                ctx['error'] = '原始密码错误'
+                render_to_response('resetPassword.html', ctx)
         else:
             return render_to_response('resetPassword.html', {'resetPwdForm': resetPwdForm})
     return render(request, 'resetPassword.html', ctx)

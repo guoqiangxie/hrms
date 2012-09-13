@@ -11,6 +11,13 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+#for email
+EMAIL_HOST = 'smtp.telecom-sh.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'sean.xu@jinjiang.com'
+EMAIL_HOST_PASSWORD = ''
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',   # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.

@@ -29,6 +29,8 @@ def apply(request, id):
                 ApplyTrack(apply_type='DEPART', approval_note=approval_note, approval=request.user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
                 edit_app.status = 'APPLY'
                 edit_app.save()
+                from ot.help import send_mail
+                send_mail(edit_app)
                 return redirect(reverse('ot_idx'))
         else:
             print 'form is not valid:', appForm.errors
@@ -65,6 +67,8 @@ def confirm(request, id):
                 ApplyTrack(apply_type='HR', approval_note=approval_note, approval=request.user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
                 edit_app.status = 'AU'
                 edit_app.save()
+                from ot.help import send_mail
+                send_mail(edit_app)
                 return redirect(reverse('ot_idx'))
         else:
             print 'form is not valid:', appForm.errors

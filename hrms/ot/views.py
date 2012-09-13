@@ -16,6 +16,7 @@ class FOvertime(forms.ModelForm):
         model = Overtime
         widgets = {'remark':Textarea(attrs={'cols':80, 'rows':10}),
                    }
+        
 
 class ResetPwdForm(forms.Form):
     oldPwd = forms.CharField(widget=forms.PasswordInput)
@@ -62,6 +63,8 @@ def new(request):
             otf.save()
             for oterId in request.REQUEST.getlist('employee'):
                 OvertimeRef(employee_id=oterId, overtimeform_id=ot.id).save()
+            from ot.help import send_mail
+            send_mail(ot)
             return redirect(reverse('ot_idx'))
         else:
             print 'form is not valid', otf.errors

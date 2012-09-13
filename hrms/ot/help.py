@@ -8,8 +8,8 @@ def send_mail(ot):
     subject = ''.join([ot.apper.username, ' apply for ', ot.reason])
     message = ''.join([ot.apper.username, ' apply for ', ot.reason, ' between ', ot.begintime.isoformat(), ' and ', ot.endtime.isoformat(), ' with ', ot.status])
     mail_from = ot.apper.email
-    mail_to = getDirector(ot.apper).email
-    msg = EmailMessage(subject, message, mail_from, [mail_to])
+    mail_to = [getDirector(ot.apper).email]
+    msg = EmailMessage(subject, message, mail_from, mail_to)
     msg.content_subtype = "html"  # Main content is now text/html
     msg.send()
 
@@ -19,3 +19,21 @@ def getDirector(u):
 
 def getHR(u):
     return u
+
+def getState(st):
+    ss = {'NEW':NewState, 'APPLY':ApplyState, 'AU':AuditState}
+    return ss[st]()
+
+
+class NewState:
+    def send(self, subject, message, ot):
+        pass
+    
+class ApplyState:
+    def send(self, subject, message, ot):
+        pass
+
+class AuditSate:
+    def send(self, subject, message, ot):
+        pass
+    

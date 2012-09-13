@@ -1,0 +1,142 @@
+- model: auth.user
+  pk: 11
+  fields:
+    groups: []
+    is_active: true
+    is_staff: true
+    last_name: ''
+    password: pbkdf2_sha256$10000$K9gcM7tgNgo7$0w+OhE65gwfHyCe6NkJqXlwxnFOn65l9r+D/paItt1w=   # password:1
+    username: leon1
+- model: auth.user
+  pk: 12
+  fields:
+    groups: []
+    is_active: true
+    is_staff: true
+    last_name: ''
+    password: pbkdf2_sha256$10000$K9gcM7tgNgo7$0w+OhE65gwfHyCe6NkJqXlwxnFOn65l9r+D/paItt1w=   # password:1
+    username: leon2
+- model: auth.user
+  pk: 13
+  fields:
+    groups: []
+    is_active: true
+    is_staff: true
+    last_name: ''
+    password: pbkdf2_sha256$10000$K9gcM7tgNgo7$0w+OhE65gwfHyCe6NkJqXlwxnFOn65l9r+D/paItt1w=   # password:1
+    username: leon3
+
+- model: ot.overtime
+  pk: 1
+  fields:
+    apper: 1
+    begintime: !!timestamp '2012-09-13 20:21:00'
+    endtime: !!timestamp '2012-09-13 20:21:00'
+    reason: asdf
+    remark: asdfasdfasdf
+    status: NEW
+- model: ot.overtime
+  pk: 2
+  fields:
+    apper: 1
+    begintime: !!timestamp '2012-09-13 20:21:00'
+    endtime: !!timestamp '2012-09-13 20:21:00'
+    reason: asdf
+    remark: asdfasdfasdf
+    status: NEW
+- model: ot.overtime
+  pk: 3
+  fields:
+    apper: 1
+    begintime: !!timestamp '2012-09-13 20:21:00'
+    endtime: !!timestamp '2012-09-13 20:21:00'
+    reason: asdf
+    remark: asdfasdfasdf
+    status: NEW
+- model: ot.overtime
+  pk: 4
+  fields:
+    apper: 1
+    begintime: !!timestamp '2012-09-13 20:21:00'
+    endtime: !!timestamp '2012-09-13 20:21:00'
+    reason: asdf
+    remark: asdfasdfasdf
+    status: NEW
+- model: ot.overtime
+  pk: 5
+  fields:
+    apper: 1
+    begintime: !!timestamp '2012-09-13 20:21:00'
+    endtime: !!timestamp '2012-09-13 20:21:00'
+    reason: asdf
+    remark: asdfasdfasdf
+    status: NEW
+- model: ot.overtime
+  pk: 6
+  fields:
+    apper: 1
+    begintime: !!timestamp '2012-09-13 20:21:00'
+    endtime: !!timestamp '2012-09-13 20:21:00'
+    reason: asdf
+    remark: asdfasdfasdf
+    status: NEW
+- model: ot.overtime
+  pk: 7
+  fields:
+    apper: 1
+    begintime: !!timestamp '2012-09-13 20:21:00'
+    endtime: !!timestamp '2012-09-13 20:21:00'
+    reason: asdf
+    remark: asdfasdfasdf
+    status: NEW
+- model: ot.overtime
+  pk: 8
+  fields:
+    apper: 1
+    begintime: !!timestamp '2012-09-13 20:21:00'
+    endtime: !!timestamp '2012-09-13 20:21:00'
+    reason: asdf
+    remark: asdfasdfasdf
+    status: NEW
+
+- model: ot.overtimeref
+  pk: 1
+  fields:
+    employee: 11
+    overtimeform: 1
+- model: ot.overtimeref
+  pk: 2
+  fields:
+    employee: 11
+    overtimeform: 2
+- model: ot.overtimeref
+  pk: 3
+  fields:
+    employee: 11
+    overtimeform: 3
+- model: ot.overtimeref
+  pk: 4
+  fields:
+    employee: 11
+    overtimeform: 4
+- model: ot.overtimeref
+  pk: 5
+  fields:
+    employee: 11
+    overtimeform: 5
+- model: ot.overtimeref
+  pk: 6
+  fields:
+    employee: 11
+    overtimeform: 6
+- model: ot.overtimeref
+  pk: 7
+  fields:
+    employee: 11
+    overtimeform: 7
+- model: ot.overtimeref
+  pk: 8
+  fields:
+    employee: 11
+    overtimeform: 8
+ 

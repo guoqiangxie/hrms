@@ -2,6 +2,7 @@
 # coding: utf-8
 from django.contrib.auth.models import User, Group
 from django.core.mail import send_mail, EmailMessage
+from hrms.ot.models import Overtime
 
 
 def send_mail(ot):
@@ -13,6 +14,13 @@ def send_mail(ot):
     msg.content_subtype = "html"  # Main content is now text/html
     msg.send()
 
+def getOvertimesByGroupName(name):
+    return Overtime.objects.raw('select ot.* from ot_overtime ot '
+                                'inner join ot_overtimeref otr on ot.id = otr.overtimeform_id '
+                                'inner join auth_user u on otr.employee_id=u.id '
+                                'inner join auth_user_groups ug on u.id=ug.user_id '
+                                'inner join auth_group g on ug.group_id = g.id '
+                                'where g.name = \''+ name + '\'')
 
 def getDirector(u):
     return u

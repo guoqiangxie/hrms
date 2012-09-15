@@ -9,31 +9,35 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from ot.models import Overtime, OvertimeRef
 from django.forms.widgets import  Textarea
-from hrms.ot.help import getOvertimesByGroupName
+from hrms.ot.help import getOvertimesByGroup
+from hrms.settings import DEPARTS
 
 
 class FOvertime(forms.ModelForm):
     class Meta:
         model = Overtime
-        widgets = {'remark':Textarea(attrs={'cols':80, 'rows':10}),
+        widgets = {'remark': Textarea(attrs={'cols': 80, 'rows': 10}),
                    }
-        
+
 
 class ResetPwdForm(forms.Form):
     oldPwd = forms.CharField(widget=forms.PasswordInput)
     newPwd = forms.CharField(widget=forms.PasswordInput)
     confirmPwd = forms.CharField(widget=forms.PasswordInput)
+
     def clean_confirmPwd(self):
         if 'newPwd' in self.cleaned_data:
-            password1=self.cleaned_data['newPwd']
-            password2=self.cleaned_data['confirmPwd']
-            if password1==password2:
+            password1 = self.cleaned_data['newPwd']
+            password2 = self.cleaned_data['confirmPwd']
+            if password1 == password2:
                 return password2
         raise forms.ValidationError('两次密码不一样')
+
 
 def page_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
+
 
 @login_required
 def resetPassword(request):
@@ -72,6 +76,7 @@ def new(request):
             for oterId in request.REQUEST.getlist('employee'):
                 OvertimeRef(employee_id=oterId, overtimeform_id=ot.id).save()
             from ot.help import send_mail
+
             send_mail(ot)
             return redirect(reverse('ot_idx'))
         else:
@@ -81,15 +86,15 @@ def new(request):
 
 @login_required
 def index(request):
-    depart = ['info', 'hr', 'tech']
-    overtimes=[]
+    overtimes = []
     for group in request.user.groups.all():
-        if group.name in depart:
-            for overtime in getOvertimesByGroupName(group.name):
+        if group.name in DEPARTS:
+            for overtime in getOvertimesByGroup(group):
                 overtimes.append(overtime)
     ctx = {}
     ctx['otList'] = overtimes
     return render(request, 'index.html', ctx)
+
 
 @login_required
 def detail(request, id):

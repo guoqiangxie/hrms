@@ -11,6 +11,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+DEPARTS = ['info', 'hr', 'tech']
+
 #for email
 EMAIL_HOST = 'smtp.telecom-sh.com'
 EMAIL_PORT = 25

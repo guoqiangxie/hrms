@@ -23,15 +23,16 @@ def apply(request, id):
         appForm = apply_trackform(request.POST)
         if appForm.is_valid():
             status = appForm.cleaned_data['status']
+            approval_note = appForm.cleaned_data['approval_note']
+            ApplyTrack(apply_type='DEPART', approval_note=approval_note, approval=request.user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
             if status == 'on':
-                print appForm
-                approval_note = appForm.cleaned_data['approval_note']
-                ApplyTrack(apply_type='DEPART', approval_note=approval_note, approval=request.user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
                 edit_app.status = 'APPLY'
-                edit_app.save()
-                from ot.help import send_mail
-                send_mail(edit_app)
-                return redirect(reverse('ot_idx'))
+            else:
+                edit_app.status = 'CAN'
+            edit_app.save()
+            from ot.help import send_mail
+            send_mail(edit_app)
+            return redirect(reverse('ot_idx'))
         else:
             print 'form is not valid:', appForm.errors
     refs = OvertimeRef.objects.filter(overtimeform=edit_app)
@@ -62,14 +63,16 @@ def confirm(request, id):
         appForm = apply_trackform(request.POST)
         if appForm.is_valid():
             status = appForm.cleaned_data['status']
+            approval_note = appForm.cleaned_data['approval_note']
+            ApplyTrack(apply_type='HR', approval_note=approval_note, approval=request.user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
             if status == 'on':
-                approval_note = appForm.cleaned_data['approval_note']
-                ApplyTrack(apply_type='HR', approval_note=approval_note, approval=request.user, overtimeform=edit_app, apply_date=datetime.datetime.now()).save()
                 edit_app.status = 'AU'
-                edit_app.save()
-                from ot.help import send_mail
-                send_mail(edit_app)
-                return redirect(reverse('ot_idx'))
+            else:
+                edit_app.status = 'DC'
+            edit_app.save()
+            from ot.help import send_mail
+            send_mail(edit_app)
+            return redirect(reverse('ot_idx'))
         else:
             print 'form is not valid:', appForm.errors
     refs = OvertimeRef.objects.filter(overtimeform=edit_app)

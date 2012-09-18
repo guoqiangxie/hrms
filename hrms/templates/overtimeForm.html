@@ -26,7 +26,7 @@
 				<li>
 					<label>加班人：</label>
 					{% for employee in employees %}
-					<input type="checkbox" name="employee" value="{{employee.id}}">
+					<input type="checkbox" name="employee" value="{{employee.id}}" style="float:none;">
 					{{ employee.username }}
 					{% endfor %}
 				</li>

@@ -6,6 +6,7 @@ from django import forms
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from ot.models import Overtime, ApplyTrack, OvertimeRef
+from hrms.ot.help import getOvertimesByDepart, getDepart
 
 
 class apply_trackform(forms.Form):
@@ -45,12 +46,16 @@ def apply(request, id):
 
 @login_required
 def applyFormList(request):
-    return redirect(reverse('ot_idx'))
+    ctx = {}
+    ctx['otList'] = getOvertimesByDepart(getDepart(request.user), 'NEW')
+    return render(request, 'index.html', ctx)
 
 
 @login_required
 def auditFormList(request):
-    return redirect(reverse('ot_idx'))
+    ctx = {}
+    ctx['otList'] = getOvertimesByDepart(getDepart(request.user), 'APPLY')
+    return render(request, 'index.html', ctx)
 
 
 @login_required

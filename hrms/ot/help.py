@@ -15,13 +15,17 @@ def send_mail(ot):
     msg.content_subtype = "html"  # Main content is now text/html
     msg.send()
 
-def getOvertimesByDepart(depart):
+def getOvertimesByDepart(depart, status=None):
     sql = 'select ot.* from ot_overtime ot ' \
           'left join auth_user u on ot.apper_id=u.id ' \
-          'left join auth_user_groups ug on u.id=ug.user_id '
+          'left join auth_user_groups ug on u.id=ug.user_id ' \
+          'where 1 = 1 '
 
     if not depart is None:
-        sql =  sql + 'where ug.group_id = \''+ str(depart.id) + '\''
+        sql =  sql + 'and ug.group_id = \''+ str(depart.id) + '\''
+
+    if not status is None:
+        sql =  sql + 'and ot.status = \''+ status + '\''
     return Overtime.objects.raw(sql)
 
 def getDirector(u):

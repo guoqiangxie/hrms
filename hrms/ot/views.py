@@ -9,8 +9,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from ot.models import Overtime, OvertimeRef
 from django.forms.widgets import  Textarea
-from hrms.ot.help import getOvertimesByGroup
-from hrms.settings import DEPARTS
+from hrms.ot.help import getOvertimesByGroup, getDepart
 
 
 class FOvertime(forms.ModelForm):
@@ -86,13 +85,11 @@ def new(request):
 
 @login_required
 def index(request):
-    overtimes = []
-    for group in request.user.groups.all():
-        if group.name in DEPARTS:
-            for overtime in getOvertimesByGroup(group):
-                overtimes.append(overtime)
     ctx = {}
-    ctx['otList'] = overtimes
+    if request.user.has_perm('ot.hr_audit_overtimeform'):
+        ctx['otList'] = Overtime.objects.all()
+    else:
+        ctx['otList'] = getOvertimesByGroup(getDepart(request.user))
     return render(request, 'index.html', ctx)
 
 

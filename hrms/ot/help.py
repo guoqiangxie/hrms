@@ -3,6 +3,7 @@
 from django.contrib.auth.models import User, Group
 from django.core.mail import send_mail, EmailMessage
 from hrms.ot.models import Overtime
+from hrms.settings import DEPARTS
 
 
 def send_mail(ot):
@@ -16,8 +17,7 @@ def send_mail(ot):
 
 def getOvertimesByGroup(group):
     return Overtime.objects.raw('select ot.* from ot_overtime ot '
-                                'inner join ot_overtimeref otr on ot.id = otr.overtimeform_id '
-                                'inner join auth_user u on otr.employee_id=u.id '
+                                'inner join auth_user u on ot.apper_id=u.id '
                                 'inner join auth_user_groups ug on u.id=ug.user_id '
                                 'inner join auth_group g on ug.group_id = g.id '
                                 'where g.name = \''+ group.name + '\'')
@@ -27,6 +27,11 @@ def getDirector(u):
 
 def getHR(u):
     return u
+
+def getDepart(user):
+    for group in user.groups.all():
+        if group.name in DEPARTS:
+            return group
 
 def getState(st):
     ss = {'NEW':NewState, 'APPLY':ApplyState, 'AU':AuditState}

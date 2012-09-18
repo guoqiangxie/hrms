@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from ot.models import Overtime, OvertimeRef
 from django.forms.widgets import  Textarea
-from hrms.ot.help import getOvertimesByGroup, getDepart, getDepartEmployees
+from hrms.ot.help import getDepart, getOvertimesByDepart, getEmployeesByDepart
 
 
 class FOvertime(forms.ModelForm):
@@ -64,7 +64,7 @@ def new(request):
     otf = FOvertime()
     user = request.user
     ctx['model'] = user
-    ctx['employees'] = getDepartEmployees(getDepart(user))
+    ctx['employees'] = getEmployeesByDepart(getDepart(user))
     ctx['form'] = otf
     ot = Overtime()
     ot.apper = request.user
@@ -86,10 +86,7 @@ def new(request):
 @login_required
 def index(request):
     ctx = {}
-    if request.user.has_perm('ot.hr_audit_overtimeform'):
-        ctx['otList'] = Overtime.objects.all()
-    else:
-        ctx['otList'] = getOvertimesByGroup(getDepart(request.user))
+    ctx['otList'] = getOvertimesByDepart(getDepart(request.user))
     return render(request, 'index.html', ctx)
 
 

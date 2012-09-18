@@ -2,14 +2,13 @@
 # coding: utf-8
 from django import forms
 from django.contrib.auth import logout
-from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from ot.models import Overtime, OvertimeRef
 from django.forms.widgets import  Textarea
-from hrms.ot.help import getOvertimesByGroup, getDepart
+from hrms.ot.help import getOvertimesByGroup, getDepart, getDepartEmployees
 
 
 class FOvertime(forms.ModelForm):
@@ -63,8 +62,9 @@ def resetPassword(request):
 def new(request):
     ctx = {}
     otf = FOvertime()
-    ctx['model'] = request.user
-    ctx['employees'] = User.objects.all()
+    user = request.user
+    ctx['model'] = user
+    ctx['employees'] = getDepartEmployees(getDepart(user))
     ctx['form'] = otf
     ot = Overtime()
     ot.apper = request.user

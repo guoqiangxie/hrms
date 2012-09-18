@@ -33,6 +33,11 @@ def getDepart(user):
         if group.name in DEPARTS:
             return group
 
+def getDepartEmployees(depart):
+    return User.objects.raw('SELECT u.* from auth_user u '
+                                'inner join auth_user_groups ug on u.id = ug.user_id '
+                                'WHERE ug.group_id = \''+str(depart.id)+'\'')
+
 def getState(st):
     ss = {'NEW':NewState, 'APPLY':ApplyState, 'AU':AuditState}
     return ss[st]()

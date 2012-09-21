@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load ot_extra %}
 {% block content %}
+
+{% load pagination_tags %}
+{% autopaginate otList 5 %}
     <div>
             <table  border="0" cellspacing="0" cellpadding="0">
                 <thead>
@@ -38,4 +41,6 @@
                 </tbody>
             </table>
     </div>
+{% paginate %}
+                
 {% endblock %}

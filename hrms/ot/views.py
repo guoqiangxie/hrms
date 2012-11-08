@@ -86,7 +86,8 @@ def new(request):
 @login_required
 def index(request):
     ctx = {}
-    ctx['otList'] = getOvertimesByDepart(getDepart(request.user))
+    from ot.help import getSpecialUser
+    ctx['otList'] = getSpecialUser(request.user).list()
     return render(request, 'index.html', ctx)
 
 

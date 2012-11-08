@@ -44,20 +44,52 @@ def getEmployeesByDepart(depart):
         sql =  sql + 'WHERE ug.group_id = \''+str(depart.id)+'\''
     return User.objects.raw(sql)
 
-def getState(st):
-    ss = {'NEW':NewState, 'APPLY':ApplyState, 'AU':AuditState}
-    return ss[st]()
-
-
-class NewState:
-    def send(self, subject, message, ot):
-        pass
+def getSpecialUser(u):
+    if(u.groups.get(name='manager')):
+        return PMUser(u)
+    if(u.groups.get(name='director')):
+        return DUser(u)
+    if(u.groups.get(name='hr_audit')):
+        return HRUser(u)
+    return CommonUser(u)
     
-class ApplyState:
-    def send(self, subject, message, ot):
-        pass
+class SpecialUser:
+    def list(self):
+        overtimes = Overtime.objects.all()
+        return overtimes
 
-class AuditSate:
-    def send(self, subject, message, ot):
-        pass
+
+class PMUser(SpecialUser):
+    def __init__(self, u):
+        pass;
     
+    def list(self):
+        overtimes = Overtime.objects.all()
+        return overtimes
+
+
+class DUser(SpecialUser):
+    def __init__(self, u):
+        pass;
+    
+    def list(self):
+        overtimes = Overtime.objects.all()
+        return overtimes
+
+
+class HRUser(SpecialUser):
+    def __init__(self, u):
+        pass;
+    
+    def list(self):
+        overtimes = Overtime.objects.all()
+        return overtimes
+
+
+class CommonUser(SpecialUser):
+    def __init__(self, u):
+        pass;
+    
+    def list(self):
+        overtimes = Overtime.objects.all()
+        return overtimes

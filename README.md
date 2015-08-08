@@ -1,4 +1,4 @@
 hrms
 ====
 
-jinjiang human resource management sysytem
+human resource management sysytem
